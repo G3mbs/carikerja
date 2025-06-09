@@ -5,7 +5,7 @@ import { CVAnalysis, JobSearchParams } from '@/types'
 
 /**
  * Enhanced Prompting Demo API
- * 
+ *
  * Endpoint untuk mendemonstrasikan perbaikan sistem prompting
  * GET /api/enhanced-prompting/demo - Demo dengan sample data
  * POST /api/enhanced-prompting/demo - Demo dengan data custom

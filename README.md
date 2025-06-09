@@ -3,9 +3,10 @@
 Sistem automation pencarian kerja yang menggunakan AI untuk analisis CV dan Browser Use API untuk pencarian kerja otomatis di berbagai platform job portal Indonesia.
 
 ## 🌐 Live Demo
-**Deployed Application**: [https://g3mbs.github.io/carikerja](https://g3mbs.github.io/carikerja)
+**Recommended Deployment**: Deploy to [Vercel](https://vercel.com) for full functionality
 
-[![Deploy to GitHub Pages](https://github.com/G3mbs/carikerja/actions/workflows/deploy.yml/badge.svg)](https://github.com/G3mbs/carikerja/actions/workflows/deploy.yml)
+[![Build and Test](https://github.com/G3mbs/carikerja/actions/workflows/deploy.yml/badge.svg)](https://github.com/G3mbs/carikerja/actions/workflows/deploy.yml)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/G3mbs/carikerja.git)
 
 ## 🚀 Fitur Utama
 
@@ -153,12 +154,16 @@ Aplikasi akan berjalan di `http://localhost:3000`
 
 ## 🚀 Deployment
 
-### GitHub Pages Deployment
-Aplikasi ini dikonfigurasi untuk deployment otomatis ke GitHub Pages menggunakan GitHub Actions.
+### Vercel Deployment (Recommended)
+Aplikasi ini dioptimalkan untuk deployment di Vercel yang mendukung Next.js dengan API routes.
 
-#### Setup Deployment
-1. **Fork atau clone repository ini**
-2. **Configure GitHub Secrets** di repository settings:
+#### Quick Deploy
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/G3mbs/carikerja.git)
+
+#### Manual Setup
+1. **Create Vercel Account** di [vercel.com](https://vercel.com)
+2. **Import GitHub Repository**
+3. **Configure Environment Variables**:
    - `NEXT_PUBLIC_SUPABASE_URL`
    - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
    - `SUPABASE_SERVICE_ROLE_KEY`
@@ -169,13 +174,12 @@ Aplikasi ini dikonfigurasi untuk deployment otomatis ke GitHub Pages menggunakan
    - `NEXTAUTH_SECRET`
    - `NEXTAUTH_URL`
 
-3. **Enable GitHub Pages** di repository settings
-4. **Push ke main branch** untuk trigger deployment
+4. **Deploy**: Otomatis deploy setiap push ke main branch
 
-#### Automatic Deployment
-- Deployment otomatis terjadi setiap push ke `main` branch
-- Build status dapat dilihat di tab "Actions"
-- Aplikasi akan tersedia di `https://username.github.io/carikerja`
+### Alternative Platforms
+- **Netlify**: Dengan Netlify Functions
+- **Railway**: Full-stack deployment
+- **Render**: Static sites dan web services
 
 Untuk panduan deployment lengkap, lihat [docs/deployment-guide.md](docs/deployment-guide.md)
 

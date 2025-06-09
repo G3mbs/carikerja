@@ -1,0 +1,38 @@
+{
+  "version": 2,
+  "name": "carikerja",
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/next"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
+    }
+  ],
+  "env": {
+    "NEXT_PUBLIC_SUPABASE_URL": "@next_public_supabase_url",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "@next_public_supabase_anon_key",
+    "SUPABASE_SERVICE_ROLE_KEY": "@supabase_service_role_key",
+    "MISTRAL_API_KEY": "@mistral_api_key",
+    "MISTRAL_MODEL": "@mistral_model",
+    "BROWSER_USE_API_KEY": "@browser_use_api_key",
+    "BROWSER_USE_BASE_URL": "@browser_use_base_url",
+    "NEXTAUTH_SECRET": "@nextauth_secret",
+    "NEXTAUTH_URL": "@nextauth_url"
+  },
+  "functions": {
+    "src/app/api/**/*.ts": {
+      "maxDuration": 30
+    }
+  },
+  "regions": ["sin1"],
+  "framework": "nextjs"
+}
