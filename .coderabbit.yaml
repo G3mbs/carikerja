@@ -1,0 +1,156 @@
+# CodeRabbit Configuration for CariKerja
+# AI-powered code review configuration
+
+# Language and framework specific settings
+language: typescript
+framework: nextjs
+
+# Review settings
+reviews:
+  # Enable auto-review on pull requests
+  auto_review: true
+  
+  # Review focus areas
+  focus:
+    - security
+    - performance
+    - best_practices
+    - type_safety
+    - accessibility
+    - seo
+    
+  # Specific checks for Next.js applications
+  nextjs:
+    - api_routes
+    - server_components
+    - client_components
+    - image_optimization
+    - routing
+    - middleware
+    
+  # Database and backend checks
+  backend:
+    - sql_injection
+    - authentication
+    - authorization
+    - data_validation
+    - error_handling
+    
+  # Frontend specific checks
+  frontend:
+    - react_hooks
+    - state_management
+    - component_structure
+    - prop_types
+    - accessibility
+
+# File patterns to review
+include:
+  - "src/**/*.ts"
+  - "src/**/*.tsx"
+  - "src/**/*.js"
+  - "src/**/*.jsx"
+  - "*.ts"
+  - "*.js"
+  - "*.json"
+  - "*.md"
+
+# File patterns to exclude from review
+exclude:
+  - "node_modules/**"
+  - ".next/**"
+  - "dist/**"
+  - "build/**"
+  - "coverage/**"
+  - "*.min.js"
+  - "*.bundle.js"
+  - "package-lock.json"
+
+# Custom rules for CariKerja project
+custom_rules:
+  # API security rules
+  - name: "api_key_exposure"
+    pattern: "(MISTRAL_API_KEY|BROWSER_USE_API_KEY|SUPABASE_SERVICE_ROLE_KEY)"
+    message: "Potential API key exposure. Ensure this is properly secured."
+    severity: "high"
+    
+  # Database query security
+  - name: "sql_injection_risk"
+    pattern: "\\$\\{.*\\}"
+    files: ["**/*.ts", "**/*.js"]
+    message: "Potential SQL injection risk. Use parameterized queries."
+    severity: "high"
+    
+  # Environment variable usage
+  - name: "env_var_usage"
+    pattern: "process\\.env\\."
+    message: "Environment variable usage detected. Ensure proper validation."
+    severity: "medium"
+    
+  # Supabase security
+  - name: "supabase_rls"
+    pattern: "supabase.*\\.from\\("
+    message: "Ensure Row Level Security (RLS) is enabled for this table."
+    severity: "medium"
+
+# AI review preferences
+ai_settings:
+  # Review style
+  tone: "constructive"
+  detail_level: "detailed"
+  
+  # Focus on Indonesian market context
+  context:
+    - "Indonesian job market application"
+    - "Bahasa Indonesia support required"
+    - "Local compliance considerations"
+    - "Performance for Indonesian users"
+    
+  # Specific attention areas
+  priorities:
+    - "Security vulnerabilities"
+    - "Performance optimizations"
+    - "Code maintainability"
+    - "TypeScript best practices"
+    - "React/Next.js patterns"
+    - "Database security"
+    - "API design"
+
+# Integration settings
+integrations:
+  # GitHub settings
+  github:
+    # Auto-approve minor changes
+    auto_approve_minor: false
+    
+    # Request changes for critical issues
+    request_changes_on: ["high", "critical"]
+    
+    # Comment on specific lines
+    inline_comments: true
+    
+    # Summary comments
+    summary_comments: true
+
+# Notification settings
+notifications:
+  # When to notify
+  on_review_complete: true
+  on_critical_issues: true
+  on_security_issues: true
+  
+  # Notification channels
+  channels:
+    - github_comments
+    - github_reviews
+
+# Learning and improvement
+learning:
+  # Learn from feedback
+  learn_from_feedback: true
+  
+  # Adapt to project patterns
+  adapt_to_codebase: true
+  
+  # Improve over time
+  continuous_improvement: true

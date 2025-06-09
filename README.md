@@ -7,6 +7,10 @@ Sistem automation pencarian kerja yang menggunakan AI untuk analisis CV dan Brow
 
 [![Build and Test](https://github.com/G3mbs/carikerja/actions/workflows/deploy.yml/badge.svg)](https://github.com/G3mbs/carikerja/actions/workflows/deploy.yml)
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/G3mbs/carikerja.git)
+[![CodeRabbit](https://img.shields.io/badge/CodeRabbit-AI%20Reviews-blue)](https://coderabbit.ai)
+
+## 🤖 AI-Powered Development
+This project uses **CodeRabbit AI** for intelligent code reviews, ensuring high code quality, security, and performance optimization.
 
 ## 🚀 Fitur Utama
 
