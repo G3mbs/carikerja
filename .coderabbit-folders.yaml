@@ -1,0 +1,206 @@
+# CodeRabbit Folder-Specific Configuration
+# Konfigurasi khusus untuk review folder tertentu
+
+# Predefined folder review profiles
+profiles:
+  # API Development Focus
+  api_development:
+    folders:
+      - "src/app/api/**"
+      - "src/lib/auth.ts"
+      - "src/lib/supabase.ts"
+    focus:
+      - security
+      - authentication
+      - input_validation
+      - error_handling
+      - api_design
+    severity_threshold: "medium"
+    auto_approve_minor: false
+    
+  # Frontend Development Focus  
+  frontend_development:
+    folders:
+      - "src/components/**"
+      - "src/app/**/*.tsx"
+      - "src/app/globals.css"
+    focus:
+      - performance
+      - accessibility
+      - react_best_practices
+      - ui_ux
+      - responsive_design
+    severity_threshold: "low"
+    auto_approve_minor: true
+    
+  # Business Logic Focus
+  business_logic:
+    folders:
+      - "src/lib/**"
+      - "src/types/**"
+    focus:
+      - logic_correctness
+      - type_safety
+      - performance
+      - maintainability
+      - documentation
+    severity_threshold: "medium"
+    auto_approve_minor: false
+    
+  # Database & Infrastructure
+  database_infrastructure:
+    folders:
+      - "database/**"
+      - "scripts/**"
+      - "*.config.*"
+    focus:
+      - security
+      - data_integrity
+      - migration_safety
+      - performance
+      - backup_strategy
+    severity_threshold: "high"
+    auto_approve_minor: false
+
+# Folder-specific rules
+folder_configurations:
+  # API Routes - Critical Security Review
+  "src/app/api/":
+    review_priority: "critical"
+    required_reviewers: 2
+    focus_areas:
+      - "Authentication bypass vulnerabilities"
+      - "Input validation and sanitization"
+      - "SQL injection prevention"
+      - "Rate limiting implementation"
+      - "Error message information leakage"
+      - "CORS configuration security"
+    custom_checks:
+      - pattern: "req\\.body"
+        message: "Ensure request body is validated and sanitized"
+        severity: "high"
+      - pattern: "process\\.env\\."
+        message: "Verify environment variable is properly validated"
+        severity: "medium"
+      - pattern: "JSON\\.parse"
+        message: "Add try-catch for JSON parsing to prevent crashes"
+        severity: "medium"
+        
+  # Components - Performance & Accessibility
+  "src/components/":
+    review_priority: "high"
+    required_reviewers: 1
+    focus_areas:
+      - "React performance optimizations"
+      - "Accessibility compliance (WCAG)"
+      - "Component reusability"
+      - "Props validation"
+      - "State management efficiency"
+      - "Indonesian language support"
+    custom_checks:
+      - pattern: "useState\\("
+        message: "Consider if useMemo or useCallback is needed for performance"
+        severity: "low"
+      - pattern: "useEffect\\("
+        message: "Verify effect dependencies and cleanup"
+        severity: "medium"
+      - pattern: "onClick"
+        message: "Ensure keyboard accessibility (onKeyDown)"
+        severity: "low"
+        
+  # Library Functions - Logic & Performance
+  "src/lib/":
+    review_priority: "high"
+    required_reviewers: 1
+    focus_areas:
+      - "Function correctness and edge cases"
+      - "Error handling completeness"
+      - "Performance implications"
+      - "Type safety and generics"
+      - "Documentation quality"
+      - "Indonesian market logic"
+    custom_checks:
+      - pattern: "async.*function"
+        message: "Ensure proper error handling and timeout management"
+        severity: "high"
+      - pattern: "export.*function"
+        message: "Verify function has proper JSDoc documentation"
+        severity: "low"
+      - pattern: "any"
+        message: "Replace 'any' with specific types for better type safety"
+        severity: "medium"
+        
+  # Database Scripts - Security & Integrity
+  "database/":
+    review_priority: "critical"
+    required_reviewers: 2
+    focus_areas:
+      - "SQL injection prevention"
+      - "Data migration safety"
+      - "Index optimization"
+      - "Row Level Security (RLS)"
+      - "Backup and recovery"
+      - "Performance impact"
+    custom_checks:
+      - pattern: "DROP"
+        message: "CRITICAL: Verify DROP operation is safe and reversible"
+        severity: "critical"
+      - pattern: "ALTER TABLE"
+        message: "Ensure ALTER operation won't break existing data"
+        severity: "high"
+      - pattern: "INSERT.*VALUES"
+        message: "Use parameterized queries to prevent SQL injection"
+        severity: "high"
+
+# Review commands for specific workflows
+review_commands:
+  # Quick security scan
+  security_scan:
+    command: "@coderabbitai focus on security vulnerabilities only"
+    folders: ["src/app/api/**", "src/lib/**", "database/**"]
+    
+  # Performance optimization review
+  performance_review:
+    command: "@coderabbitai analyze performance bottlenecks and optimization opportunities"
+    folders: ["src/components/**", "src/lib/**", "src/app/**"]
+    
+  # Type safety check
+  type_safety:
+    command: "@coderabbitai check TypeScript type safety and suggest improvements"
+    folders: ["src/**/*.ts", "src/**/*.tsx"]
+    
+  # Indonesian market compliance
+  localization_review:
+    command: "@coderabbitai review for Indonesian market requirements and localization"
+    folders: ["src/components/**", "src/lib/**", "src/types/**"]
+
+# Notification settings per folder
+notifications:
+  "src/app/api/":
+    slack_channel: "#api-reviews"
+    email_alerts: true
+    severity_threshold: "medium"
+    
+  "src/components/":
+    slack_channel: "#frontend-reviews"
+    email_alerts: false
+    severity_threshold: "high"
+    
+  "database/":
+    slack_channel: "#database-reviews"
+    email_alerts: true
+    severity_threshold: "low"
+    immediate_alert: true
+
+# Metrics tracking per folder
+metrics:
+  track_by_folder: true
+  generate_reports: true
+  report_frequency: "weekly"
+  include_trends: true
+  
+  folder_metrics:
+    - "src/app/api/": ["security_score", "performance_score", "code_quality"]
+    - "src/components/": ["performance_score", "accessibility_score", "reusability"]
+    - "src/lib/": ["logic_correctness", "type_safety", "documentation_quality"]
+    - "database/": ["security_score", "data_integrity", "migration_safety"]

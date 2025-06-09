@@ -44,16 +44,32 @@ reviews:
     - prop_types
     - accessibility
 
-# File patterns to review
+# File patterns to review - SPECIFIC FOLDERS
 include:
-  - "src/**/*.ts"
-  - "src/**/*.tsx"
-  - "src/**/*.js"
-  - "src/**/*.jsx"
-  - "*.ts"
-  - "*.js"
-  - "*.json"
-  - "*.md"
+  # API Routes - High Priority Review
+  - "src/app/api/**/*.ts"
+  - "src/app/api/**/*.js"
+
+  # Components - UI/UX Review
+  - "src/components/**/*.tsx"
+  - "src/components/**/*.ts"
+
+  # Library/Utils - Logic Review
+  - "src/lib/**/*.ts"
+  - "src/lib/**/*.js"
+
+  # Types - Type Safety Review
+  - "src/types/**/*.ts"
+
+  # Database Scripts - Security Review
+  - "database/**/*.sql"
+  - "database/**/*.js"
+
+  # Configuration Files
+  - "*.config.ts"
+  - "*.config.js"
+  - "package.json"
+  - "tsconfig.json"
 
 # File patterns to exclude from review
 exclude:
@@ -65,6 +81,84 @@ exclude:
   - "*.min.js"
   - "*.bundle.js"
   - "package-lock.json"
+  - "examples/**"
+  - "docs/**"
+  - "tests/**"
+  - "scripts/**"
+
+# Folder-specific review rules
+folder_rules:
+  # API Routes - Security Focus
+  "src/app/api/**":
+    priority: "high"
+    focus:
+      - security
+      - authentication
+      - input_validation
+      - error_handling
+    rules:
+      - name: "api_security_check"
+        pattern: "(req\\.|request\\.)"
+        message: "Ensure proper request validation and sanitization"
+        severity: "high"
+      - name: "response_security"
+        pattern: "NextResponse\\."
+        message: "Verify response doesn't leak sensitive information"
+        severity: "medium"
+
+  # Components - UI/Performance Focus
+  "src/components/**":
+    priority: "medium"
+    focus:
+      - performance
+      - accessibility
+      - react_best_practices
+      - prop_validation
+    rules:
+      - name: "react_hooks_usage"
+        pattern: "use[A-Z]"
+        message: "Ensure hooks are used correctly and efficiently"
+        severity: "medium"
+      - name: "component_props"
+        pattern: "interface.*Props"
+        message: "Verify prop types are properly defined"
+        severity: "low"
+
+  # Library/Utils - Logic Focus
+  "src/lib/**":
+    priority: "high"
+    focus:
+      - logic_correctness
+      - error_handling
+      - performance
+      - type_safety
+    rules:
+      - name: "async_error_handling"
+        pattern: "async.*function"
+        message: "Ensure proper error handling in async functions"
+        severity: "high"
+      - name: "utility_exports"
+        pattern: "export.*function"
+        message: "Verify utility functions are properly typed and documented"
+        severity: "medium"
+
+  # Database - Security Focus
+  "database/**":
+    priority: "critical"
+    focus:
+      - security
+      - sql_injection
+      - data_integrity
+      - performance
+    rules:
+      - name: "sql_security"
+        pattern: "(INSERT|UPDATE|DELETE|SELECT)"
+        message: "Review SQL query for security vulnerabilities"
+        severity: "high"
+      - name: "migration_safety"
+        pattern: "(DROP|ALTER)"
+        message: "Ensure migration is safe and reversible"
+        severity: "critical"
 
 # Custom rules for CariKerja project
 custom_rules:
@@ -73,23 +167,26 @@ custom_rules:
     pattern: "(MISTRAL_API_KEY|BROWSER_USE_API_KEY|SUPABASE_SERVICE_ROLE_KEY)"
     message: "Potential API key exposure. Ensure this is properly secured."
     severity: "high"
-    
+    files: ["src/app/api/**/*.ts", "src/lib/**/*.ts"]
+
   # Database query security
   - name: "sql_injection_risk"
     pattern: "\\$\\{.*\\}"
-    files: ["**/*.ts", "**/*.js"]
+    files: ["src/app/api/**/*.ts", "src/lib/**/*.ts"]
     message: "Potential SQL injection risk. Use parameterized queries."
     severity: "high"
-    
+
   # Environment variable usage
   - name: "env_var_usage"
     pattern: "process\\.env\\."
+    files: ["src/**/*.ts", "src/**/*.js"]
     message: "Environment variable usage detected. Ensure proper validation."
     severity: "medium"
-    
+
   # Supabase security
   - name: "supabase_rls"
     pattern: "supabase.*\\.from\\("
+    files: ["src/app/api/**/*.ts", "src/lib/**/*.ts"]
     message: "Ensure Row Level Security (RLS) is enabled for this table."
     severity: "medium"
 
